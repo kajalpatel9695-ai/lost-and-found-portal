@@ -1,0 +1,496 @@
+/* =========================================
+   LOST & FOUND PORTAL - MAIN CSS
+   ========================================= */
+
+
+/* ---------- General Page ---------- */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fb;
+    color: #222;
+}
+
+
+/* ---------- Main Heading ---------- */
+
+h1 {
+    margin: 0;
+    padding: 25px 10px;
+    background-color: #1e3a8a;
+    color: white;
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #1e3a8a;
+    font-size: 26px;
+}
+
+h3 {
+    color: #333;
+}
+
+
+/* ---------- Navigation ---------- */
+
+body > table {
+    background-color: white;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body > table th {
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+body > table a {
+    text-decoration: none;
+    color: #1e3a8a;
+    font-weight: bold;
+}
+
+body > table a:hover {
+    color: #2563eb;
+}
+
+
+/* ---------- Horizontal Line ---------- */
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+}
+
+
+/* ---------- Forms ---------- */
+
+form table {
+    background-color: white;
+    border-collapse: collapse;
+    border: none;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+form table td {
+    padding: 14px;
+    border: 1px solid #ddd;
+}
+
+form table td:first-child {
+    font-weight: bold;
+    background-color: #f1f5f9;
+}
+
+
+/* ---------- Input Fields ---------- */
+
+input,
+textarea,
+select {
+    width: 280px;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 4px rgba(37, 99, 235, 0.3);
+}
+
+
+/* ---------- Buttons ---------- */
+
+button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2563eb;
+}
+
+
+/* ---------- Logout Button ---------- */
+
+.logout-btn {
+    background-color: red !important;
+    color: white !important;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+
+.logout-btn:hover {
+    background-color: #cc0000 !important;
+}
+
+
+/* ---------- Account Box ---------- */
+
+#accountBox {
+    width: 550px;
+    max-width: 90%;
+    margin: 25px auto;
+    padding: 25px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+
+#accountBox h3 {
+    color: #1e3a8a;
+    font-size: 22px;
+}
+
+#accountBox p {
+    padding: 8px;
+    margin: 5px;
+}
+
+#accountBox span {
+    margin-left: 8px;
+    color: #555;
+}
+
+
+/* ---------- Complete Profile ---------- */
+
+#profileForm {
+    margin-top: 15px;
+}
+
+#profileForm input {
+    margin-left: 10px;
+}
+
+#profileForm button {
+    margin-top: 10px;
+}
+
+
+/* ---------- My Reports ---------- */
+
+#myReports {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+
+/* ---------- Lost & Found Containers ---------- */
+
+#lostItemsContainer,
+#foundItemsContainer,
+#homeLostItems,
+#homeFoundItems {
+    width: 90%;
+    max-width: 1100px;
+    margin: 20px auto;
+}
+
+
+/* ---------- Item Cards ---------- */
+
+.item-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 700px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.item-card h3 {
+    color: #1e3a8a;
+    margin-top: 0;
+}
+
+.item-card p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.item-card img {
+    max-width: 250px;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+
+/* =========================================
+   SEARCH BAR
+   ========================================= */
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    width: 100%;
+    margin: 20px auto;
+}
+
+
+/* Search Input Box */
+
+.search-input-box {
+    position: relative;
+    width: 350px;
+    flex-shrink: 0;
+}
+
+
+/* Search Input */
+
+.search-input-box input {
+    width: 100% !important;
+    height: 42px;
+
+    box-sizing: border-box;
+
+    padding: 10px 15px 10px 42px;
+
+    border: 1px solid #aaa;
+    border-radius: 6px;
+
+    font-size: 15px;
+    outline: none;
+}
+
+.search-input-box input:focus {
+    border-color: #1e3a8a;
+}
+
+
+/* Search Icon */
+
+.search-icon {
+    position: absolute !important;
+
+    left: 13px !important;
+    top: 50% !important;
+
+    transform: translateY(-50%) !important;
+
+    font-size: 18px;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+
+/* Search Button */
+
+.search-container #searchButton {
+    height: 42px;
+
+    padding: 0 22px;
+
+    margin: 0 !important;
+
+    background-color: #1e3a8a;
+
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+.search-container #searchButton:hover {
+    background-color: #2563eb;
+}
+
+
+/* ---------- Photo Preview ---------- */
+
+#photoPreview {
+    max-width: 250px;
+    max-height: 200px;
+    margin: 10px auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+
+/* ---------- Footer ---------- */
+
+body > p:last-child {
+    color: #666;
+    font-size: 14px;
+    padding: 15px;
+}
+
+
+/* ---------- Links ---------- */
+
+a {
+    transition: 0.2s;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    h1 {
+        font-size: 23px;
+        padding: 20px 5px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    body > table {
+        font-size: 12px;
+    }
+
+    body > table th {
+        padding: 8px 4px;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 230px;
+        max-width: 100%;
+    }
+
+    #accountBox {
+        width: 95%;
+        padding: 15px;
+    }
+
+    #profileForm input {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+
+    /* Mobile Search */
+
+    .search-container {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .search-input-box {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .search-container #searchButton {
+        margin: 0 !important;
+        width: auto;
+    }
+}
+
+.portal-title {
+    text-align: center;
+    padding: 20px 10px 15px;
+}
+
+/* ---------- Portal Title ---------- */
+
+.portal-title {
+    text-align: center;
+    padding: 20px 10px 15px;
+}
+
+.portal-name {
+    font-size: 52px;
+    font-weight: bold;
+    color: #102a56;
+    line-height: 1.1;
+}
+
+.portal-name span {
+    color: #269b32;
+}
+
+.portal-subtitle {
+    margin-top: 8px;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 8px;
+    color: #269b32;
+}
+
+.portal-subtitle span {
+    letter-spacing: 0;
+    font-weight: normal;
+}
+
+.portal-tagline {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #222;
+}
+
+
+/* ---------- Mobile Portal Title ---------- */
+
+@media (max-width: 700px) {
+
+    .portal-name {
+        font-size: 35px;
+    }
+
+    .portal-subtitle {
+        font-size: 19px;
+        letter-spacing: 5px;
+    }
+
+    .portal-tagline {
+        font-size: 14px;
+    }
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body {
+    touch-action: pan-y;
+}

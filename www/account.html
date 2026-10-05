@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Account | Lost & Found Portal</title>
+
+    <meta name="description" content="Manage your Lost & Found Portal account and profile information.">
+
+    <meta name="robots" content="noindex, follow">
+
+    <link rel="canonical" href="https://lost-and-found-portal-76722.web.app/account.html">
+
+    <link rel="icon" type="image/png" href="images/icon.png">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Main Heading -->
+
+    <h1 align="center">
+        LOST & FOUND PORTAL
+    </h1>
+
+
+    <!-- Navigation -->
+
+    <table border="1" width="100%" cellpadding="15" cellspacing="0">
+
+        <tr>
+
+            <th>
+                <a href="index.html">
+                    Home
+                </a>
+            </th>
+
+
+            <th>
+                <a href="lost.html">
+                    Report Lost Item
+                </a>
+            </th>
+
+
+            <th>
+                <a href="found.html">
+                    Report Found Item
+                </a>
+            </th>
+
+
+            <th>
+                <a href="my-reports.html">
+                    My Reports
+                </a>
+            </th>
+
+
+            <th>
+                <a href="account.html">
+                    Account
+                </a>
+            </th>
+
+        </tr>
+
+    </table>
+
+
+    <br>
+    <br>
+
+
+    <!-- Account Heading -->
+
+    <h2 align="center">
+        MY ACCOUNT
+    </h2>
+
+    <hr>
+
+
+    <!-- Account Information -->
+
+    <div id="accountBox" align="center">
+
+        <h3>
+            👤 Account Details
+        </h3>
+
+
+        <p>
+            <b>Full Name:</b>
+            <span id="userName">
+                Loading...
+            </span>
+        </p>
+
+
+        <p>
+            <b>College ID:</b>
+            <span id="userCollegeId">
+                Loading...
+            </span>
+        </p>
+
+
+        <p>
+            <b>Email:</b>
+            <span id="userEmail">
+                Loading...
+            </span>
+        </p>
+
+
+        <p>
+            <b>Mobile Number:</b>
+            <span id="userPhone">
+                Loading...
+            </span>
+        </p>
+
+
+        <p>
+            <b>Account Status:</b>
+            <span id="accountStatus">
+                Checking...
+            </span>
+        </p>
+
+
+        <p>
+            <b>User ID:</b>
+            <span id="userId">
+                Loading...
+            </span>
+        </p>
+
+
+        <p>
+            <b>Account Created:</b>
+            <span id="accountCreated">
+                Loading...
+            </span>
+        </p>
+
+
+        <br>
+
+        <hr>
+
+<h3>
+    Complete Your Profile
+</h3>
+
+<form id="profileForm">
+
+    <p>
+        <label>
+            <b>Full Name:</b>
+        </label>
+
+        <input
+            type="text"
+            id="profileName"
+            placeholder="Enter your full name"
+            required
+        >
+    </p>
+
+
+    <p>
+        <label>
+            <b>College ID:</b>
+        </label>
+
+        <input
+            type="text"
+            id="profileCollegeId"
+            placeholder="Enter your college ID"
+            required
+        >
+    </p>
+
+
+    <p>
+        <label>
+            <b>Mobile Number:</b>
+        </label>
+
+        <input
+            type="tel"
+            id="profilePhone"
+            placeholder="Enter your mobile number"
+            required
+        >
+    </p>
+
+
+    <button type="submit">
+        SAVE PROFILE
+    </button>
+
+</form>
+
+<br>
+
+
+            <!-- Logout Button -->
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+            style="
+                background-color: red;
+                color: white;
+                border: none;
+                padding: 10px 30px;
+                cursor: pointer;
+                font-weight: bold;
+            "
+        >
+            Logout
+        </button>
+
+        <br>
+
+        <!-- Delete Account Button -->
+
+        <button
+    id="deleteAccountBtn"
+    class="delete-account-btn"
+    style="
+        background-color: darkred;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 20px !important;
+    "
+>
+    Delete Account
+</button>
+
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+    <hr>
+
+
+    <!-- Footer -->
+
+    <p align="center">
+        © 2026 Lost & Found Portal
+    </p>
+
+
+    <!-- JavaScript -->
+
+    <script
+        type="module"
+        src="js/account.js"
+    ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+{
+  "appId": "com.lostandfound.portal",
+  "appName": "Lost & Found",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2500,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffff",
+      "showSpinner": false
+    }
+  }
+}

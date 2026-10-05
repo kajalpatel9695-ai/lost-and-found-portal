@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lost & Found Portal | Report Lost & Found Items</title>
+
+    <meta name="description" content="Lost & Found Portal for college students. Report lost items, report found items, and search for lost and found belongings.">
+
+    <meta name="robots" content="index, follow">
+
+    <meta name="author" content="Lost & Found Portal">
+
+    <link rel="canonical" href="https://lost-and-found-portal-76722.web.app/">
+
+    <link rel="icon" type="image/png" href="images/icon.png">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Main Heading -->
+    <div class="portal-title">
+    <h1 class="portal-name">
+        Lost <span>&amp;</span> Found
+    </h1>
+
+    <div class="portal-subtitle">
+        <span>—</span> PORTAL <span>—</span>
+    </div>
+
+    <div class="portal-tagline">
+        Find it. Report it. Get it back.
+    </div>
+</div>
+
+
+    <!-- Navigation -->
+    <table border="1" width="100%" cellpadding="15" cellspacing="0">
+
+        <tr>
+
+            <th>
+                <a href="index.html">Home</a>
+            </th>
+
+            <th>
+                <a href="lost.html">Report Lost Item</a>
+            </th>
+
+            <th>
+                <a href="found.html">Report Found Item</a>
+            </th>
+
+            <th>
+                <a href="my-reports.html">My Reports</a>
+            </th>
+
+            <th>
+                <a href="account.html">Account</a>
+            </th>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+
+    <!-- Search Bar -->
+
+<div class="search-container">
+
+    <div class="search-input-box">
+
+        <span class="search-icon">&#128269;</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search lost or found items..."
+        >
+
+    </div>
+    
+    <button id="searchButton">
+        Search
+    </button>
+
+</div>
+
+<!-- Search Results -->
+
+<div id="searchResults"></div>
+
+<br><br>
+
+
+    <!-- Home Page -->
+    <h2 align="center">HOME PAGE</h2>
+
+    <hr>
+
+
+    <!-- How It Works -->
+    <h2>How It Works?</h2>
+ 
+    <ol>
+
+        <li>Register / Login</li>
+
+        <li>Report Lost Item</li>
+
+        <li>Report Found Item</li>
+
+        <li>Search Items</li>
+
+        <li>Contact / Claim Item</li>
+
+    </ol>
+
+
+    <hr>
+
+
+    <!-- About Portal -->
+    <h2>About the Portal</h2>
+
+    <p>
+        Lost & Found Portal is a platform for college students
+        to report lost and found items.
+    </p>
+
+    <p>
+        Students can report their lost items, report items they
+        have found, and search for their belongings.
+    </p>
+
+
+    <hr>
+
+
+    <!-- LOST ITEMS -->
+    <h2 align="center">🔴 LOST ITEMS</h2>
+
+    <div
+        id="homeLostItems"
+        align="center"
+    >
+
+        <!-- Lost items will appear here -->
+
+    </div>
+
+
+    <br><br>
+
+    <hr>
+
+
+    <!-- FOUND ITEMS -->
+    <h2 align="center">🟢 FOUND ITEMS</h2>
+
+    <div
+        id="homeFoundItems"
+        align="center"
+    >
+
+        <!-- Found items will appear here -->
+
+    </div>
+
+
+    <br><br>
+
+    <hr>
+
+
+    <!-- Footer -->
+    <p align="center">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <br><br>
+    © 2026 Lost &amp; Found Portal
+</p>
+
+
+    <!-- JavaScript -->
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/home.js"></script>
+<script type="module" src="js/search.js"></script>
+</body>
+
+</html>

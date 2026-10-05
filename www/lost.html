@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report Lost Item | Lost & Found Portal</title>
+
+    <meta name="description" content="Report a lost item on the Lost & Found Portal for college students. Provide item details, location, date, description and contact information.">
+
+    <meta name="robots" content="noindex, follow">
+
+    <link rel="canonical" href="https://lost-and-found-portal-76722.web.app/lost.html">
+
+    <link rel="icon" type="image/png" href="images/icon.png">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Main Heading -->
+
+    <h1 align="center">
+        LOST & FOUND PORTAL
+    </h1>
+
+
+    <!-- Navigation -->
+
+    <table border="1" width="100%" cellpadding="15" cellspacing="0">
+
+        <tr>
+
+            <th>
+                <a href="index.html">
+                    Home
+                </a>
+            </th>
+
+            <th>
+                <a href="lost.html">
+                    Report Lost Item
+                </a>
+            </th>
+
+            <th>
+                <a href="found.html">
+                    Report Found Item
+                </a>
+            </th>
+
+            <th>
+                <a href="my-reports.html">
+                    My Reports
+                </a>
+            </th>
+
+            <th>
+                <a href="account.html">
+                    Account
+                </a>
+            </th>
+
+        </tr>
+
+    </table>
+
+
+    <br>
+    <br>
+
+
+    <!-- Report Lost Item Heading -->
+
+    <h2 align="center">
+        REPORT LOST ITEM
+    </h2>
+
+    <hr>
+
+
+    <!-- Lost Item Form -->
+
+    <form id="lostItemForm">
+
+        <table
+            class="lost-form-table"
+            border="1"
+            align="center"
+            cellpadding="12"
+            cellspacing="0"
+        >
+
+            <tr>
+
+                <td>
+                    <label>Item Name:</label>
+                </td>
+
+                <td>
+                    <input
+                        type="text"
+                        id="itemName"
+                        required
+                    >
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <label>Category:</label>
+                </td>
+
+                <td>
+
+                    <select
+                        id="category"
+                        required
+                    >
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="ID Card">
+                            ID Card
+                        </option>
+
+                        <option value="Mobile">
+                            Mobile
+                        </option>
+
+                        <option value="Laptop">
+                            Laptop
+                        </option>
+
+                        <option value="Calculator">
+                            Calculator
+                        </option>
+
+                        <option value="Bag">
+                            Bag
+                        </option>
+
+                        <option value="Book">
+                            Book
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <label>Lost Location:</label>
+                </td>
+
+                <td>
+                    <input
+                        type="text"
+                        id="location"
+                        required
+                    >
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <label>Date Lost:</label>
+                </td>
+
+                <td>
+                    <input
+                        type="date"
+                        id="dateLost"
+                        required
+                    >
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <label>Description:</label>
+                </td>
+
+                <td>
+
+                    <textarea
+                        id="description"
+                        rows="5"
+                        cols="30"
+                        required
+                    ></textarea>
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <label>Contact:</label>
+                </td>
+
+                <td>
+                    <input
+                        type="text"
+                        id="contact"
+                        required
+                    >
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <label>Upload Photo:</label>
+                </td>
+
+                <td>
+
+                    <input
+                        type="file"
+                        id="itemPhoto"
+                        accept="image/*"
+                    >
+
+                    <br>
+                    <br>
+
+                    <img
+                        id="photoPreview"
+                        width="150"
+                        style="display:none;"
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td
+                    colspan="2"
+                    align="center"
+                >
+
+                    <button type="submit">
+                        SUBMIT REPORT
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </form>
+
+
+    <br>
+    <br>
+
+    <hr>
+
+
+    <!-- Lost Items Section -->
+
+    <h2 align="center">
+        LOST ITEMS
+    </h2>
+
+
+    <div id="lostItemsContainer">
+
+        <!-- Lost items will appear here -->
+
+    </div>
+
+
+    <!-- JavaScript -->
+
+    <script
+        type="module"
+        src="js/lost.js"
+    ></script>
+
+</body>
+
+</html>

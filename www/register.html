@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registration - Lost & Found Portal</title>
+
+    <meta
+        name="description"
+        content="Create an account on Lost & Found Portal to report and manage lost and found items."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <link
+        rel="canonical"
+        href="https://lost-and-found-portal-76722.web.app/register.html"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="images/icon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- Main Heading -->
+
+    <h1 align="center">
+        LOST & FOUND PORTAL
+    </h1>
+
+
+    <!-- Navigation -->
+
+    <table border="1" width="100%" cellpadding="15" cellspacing="0">
+
+        <tr>
+
+            <th>
+                <a href="index.html">
+                    Home
+                </a>
+            </th>
+
+            <th>
+                <a href="lost.html">
+                    Report Lost Item
+                </a>
+            </th>
+
+            <th>
+                <a href="found.html">
+                    Report Found Item
+                </a>
+            </th>
+
+            <th>
+                <a href="login.html">
+                    Login
+                </a>
+            </th>
+
+        </tr>
+
+    </table>
+
+
+    <br><br>
+
+
+    <!-- Registration Heading -->
+
+    <h2 align="center">
+        REGISTRATION
+    </h2>
+
+    <hr>
+
+
+    <!-- Registration Form -->
+
+    <form id="registerForm">
+
+        <table
+            border="1"
+            align="center"
+            cellpadding="12"
+            cellspacing="0"
+        >
+
+            <!-- Name -->
+
+            <tr>
+
+                <td>
+                    <label>Full Name:</label>
+                </td>
+
+                <td>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- College ID -->
+
+            <tr>
+
+                <td>
+                    <label>College ID:</label>
+                </td>
+
+                <td>
+
+                    <input
+                        type="text"
+                        id="collegeId"
+                        placeholder="Enter your college ID"
+                        required
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- Email -->
+
+            <tr>
+
+                <td>
+                    <label>Email:</label>
+                </td>
+
+                <td>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- Phone -->
+
+            <tr>
+
+                <td>
+                    <label>Mobile Number:</label>
+                </td>
+
+                <td>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter mobile number"
+                        autocomplete="tel"
+                        required
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- Password -->
+
+            <tr>
+
+                <td>
+                    <label>Password:</label>
+                </td>
+
+                <td>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- Confirm Password -->
+
+            <tr>
+
+                <td>
+                    <label>Confirm Password:</label>
+                </td>
+
+                <td>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </td>
+
+            </tr>
+
+
+            <!-- Submit -->
+
+            <tr>
+
+                <td colspan="2" align="center">
+
+                    <button type="submit">
+                        REGISTER
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </form>
+
+
+    <br>
+
+
+    <!-- Login Option -->
+
+    <p align="center">
+
+        Already have an account?
+
+        <a href="login.html">
+            Login here
+        </a>
+
+    </p>
+
+
+    <!-- Privacy / Authentication Information -->
+
+    <p align="center">
+
+        By registering, you agree to the
+
+        <a href="privacy-policy.html">
+            Privacy Policy
+        </a>.
+
+    </p>
+
+
+    <p align="center">
+
+        Account authentication is securely handled using
+        Firebase Authentication.
+
+    </p>
+
+
+    <p align="center">
+
+        Contact:
+
+        <a href="mailto:lostandfoundportal.in@gmail.com">
+            lostandfoundportal.in@gmail.com
+        </a>
+
+    </p>
+
+
+    <br>
+
+    <hr>
+
+
+    <!-- Footer -->
+
+    <p align="center">
+        © 2026 Lost & Found Portal
+    </p>
+
+
+    <!-- JavaScript -->
+
+    <script type="module" src="js/auth.js"></script>
+
+</body>
+
+</html>
