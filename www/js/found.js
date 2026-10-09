@@ -10,14 +10,34 @@ import {
 // GET FORM ELEMENTS
 // ===============================
 
-const foundItemForm =
-    document.getElementById("foundItemForm");
+const foundItemForm = document.getElementById("foundItemForm");
+const itemPhoto = document.getElementById("itemPhoto");
+const photoPreview = document.getElementById("photoPreview");
 
-const itemPhoto =
-    document.getElementById("itemPhoto");
 
-const photoPreview =
-    document.getElementById("photoPreview");
+// ===============================
+// PHOTO PREVIEW
+// ===============================
+
+itemPhoto.addEventListener("change", function () {
+
+    const file = itemPhoto.files[0];
+
+    if (!file) {
+        photoPreview.src = "";
+        photoPreview.style.display = "none";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        photoPreview.src = event.target.result;
+        photoPreview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+});
 
 
 // ===============================
@@ -26,18 +46,17 @@ const photoPreview =
 
 function compressImage(file) {
 
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
 
         const reader = new FileReader();
 
-        reader.onload = function(event) {
+        reader.onload = function (event) {
 
             const img = new Image();
 
-            img.onload = function() {
+            img.onload = function () {
 
-                const canvas =
-                    document.createElement("canvas");
+                const canvas = document.createElement("canvas");
 
                 const maxWidth = 800;
                 const maxHeight = 800;
@@ -45,250 +64,101 @@ function compressImage(file) {
                 let width = img.width;
                 let height = img.height;
 
-
-                // Resize image
                 if (width > maxWidth) {
-
-                    height =
-                        height * (maxWidth / width);
-
+                    height = height * (maxWidth / width);
                     width = maxWidth;
-
                 }
-
 
                 if (height > maxHeight) {
-
-                    width =
-                        width * (maxHeight / height);
-
+                    width = width * (maxHeight / height);
                     height = maxHeight;
-
                 }
-
 
                 canvas.width = width;
                 canvas.height = height;
 
+                const ctx = canvas.getContext("2d");
 
-                const ctx =
-                    canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
 
-
-                ctx.drawImage(
-                    img,
-                    0,
-                    0,
-                    width,
-                    height
-                );
-
-
-                // Convert to compressed JPEG
                 const compressedImage =
-                    canvas.toDataURL(
-                        "image/jpeg",
-                        0.6
-                    );
-
+                    canvas.toDataURL("image/jpeg", 0.6);
 
                 resolve(compressedImage);
-
             };
 
-
-            img.onerror = function() {
-
-                reject(
-                    new Error("Image load failed")
-                );
-
+            img.onerror = function () {
+                reject(new Error("Image load failed."));
             };
-
 
             img.src = event.target.result;
-
         };
 
-
-        reader.onerror = function() {
-
-            reject(
-                new Error("File reading failed")
-            );
-
+        reader.onerror = function () {
+            reject(new Error("File reading failed."));
         };
-
 
         reader.readAsDataURL(file);
-
     });
-
 }
 
 
 // ===============================
-// PHOTO PREVIEW
+// SUBMIT FOUND ITEM FORM
 // ===============================
 
-itemPhoto.addEventListener(
-    "change",
-    function() {
+foundItemForm.addEventListener("submit", async function (event) {
 
-        const file =
-            itemPhoto.files[0];
+    event.preventDefault();
 
-        if (!file) {
+    const user = auth.currentUser;
 
-            photoPreview.style.display =
-                "none";
-
-            return;
-
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function(event) {
-
-                photoPreview.src =
-                    event.target.result;
-
-                photoPreview.style.display =
-                    "block";
-
-            };
-
-
-        reader.readAsDataURL(file);
-
+    if (!user) {
+        alert("Please login first.");
+        window.location.href = "login.html";
+        return;
     }
-);
 
+    // Person Name
+    const personName =
+        document.getElementById("personName").value.trim();
 
-// ===============================
-// SUBMIT FORM
-// ===============================
+    // Item Name
+    const itemName =
+        document.getElementById("itemName").value.trim();
 
-foundItemForm.addEventListener(
-    "submit",
-    async function(event) {
+    // Category
+    const category =
+        document.getElementById("category").value;
 
-        event.preventDefault();
+    // Remaining details
+    const location =
+        document.getElementById("location").value.trim();
 
+    const dateFound =
+        document.getElementById("dateFound").value;
 
-        // ===========================
-        // CHECK LOGIN
-        // ===========================
+    const description =
+        document.getElementById("description").value.trim();
 
-        const user =
-            auth.currentUser;
+    const contact =
+        document.getElementById("contact").value.trim();
 
+    let photo = "";
 
-        if (!user) {
+    try {
 
-            alert("Please login first.");
-
-            window.location.href =
-                "login.html";
-
-            return;
-
+        // Compress selected photo
+        if (itemPhoto.files[0]) {
+            photo = await compressImage(itemPhoto.files[0]);
         }
 
-
-        // ===========================
-        // GET FORM VALUES
-        // ===========================
-
-        const itemName =
-            document
-                .getElementById("itemName")
-                .value
-                .trim();
-
-
-        const category =
-            document
-                .getElementById("category")
-                .value
-                .trim();
-
-
-        const location =
-            document
-                .getElementById("location")
-                .value
-                .trim();
-
-
-        const dateFound =
-            document
-                .getElementById("dateFound")
-                .value;
-
-
-        const description =
-            document
-                .getElementById("description")
-                .value
-                .trim();
-
-
-        const contact =
-            document
-                .getElementById("contact")
-                .value
-                .trim();
-
-
-        // ===========================
-        // PHOTO
-        // ===========================
-
-        let photo = "";
-
-
-        try {
-
-            if (itemPhoto.files[0]) {
-
-                photo =
-                    await compressImage(
-                        itemPhoto.files[0]
-                    );
-
-            }
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Photo compression error:",
-                error
-            );
-
-            alert(
-                "Photo process nahi ho paayi."
-            );
-
-            return;
-
-        }
-
-
-        // ===========================
-        // CREATE FOUND ITEM
-        // ===========================
-
+        // Create report
         const foundItem = {
 
             userId: user.uid,
+
+            personName: personName,
 
             itemName: itemName,
 
@@ -303,60 +173,27 @@ foundItemForm.addEventListener(
             contact: contact,
 
             photo: photo
-
         };
 
+        // Save report to Firebase
+        await addDoc(
+            collection(db, "foundItems"),
+            foundItem
+        );
 
-        // ===========================
-        // SAVE TO FIRESTORE
-        // ===========================
+        alert("Found item reported successfully!");
 
-        try {
+        // Reset form
+        foundItemForm.reset();
 
-            await addDoc(
-                collection(
-                    db,
-                    "foundItems"
-                ),
-                foundItem
-            );
+        // Hide photo preview
+        photoPreview.src = "";
+        photoPreview.style.display = "none";
 
+    } catch (error) {
 
-            alert(
-                "Found item reported successfully!"
-            );
+        console.error("Error adding found item:", error);
 
-
-            // Clear form
-            foundItemForm.reset();
-
-
-            // Hide photo preview
-            photoPreview.src = "";
-
-            photoPreview.style.display =
-                "none";
-
-
-            console.log(
-                "Found item saved successfully!"
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "Error adding found item:",
-                error
-            );
-
-
-            alert(
-                "Error! Found item save nahi hua."
-            );
-
-        }
-
+        alert("Error! Found item save nahi hua. Please try again.");
     }
-);
+});

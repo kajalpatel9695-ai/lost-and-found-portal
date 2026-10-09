@@ -6,39 +6,44 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-// Get form
+// ===============================
+// GET FORM ELEMENTS
+// ===============================
+
 const lostItemForm = document.getElementById("lostItemForm");
-
-// Get photo input
 const itemPhoto = document.getElementById("itemPhoto");
-
-// Get photo preview
 const photoPreview = document.getElementById("photoPreview");
 
 
-// Photo Preview
+// ===============================
+// PHOTO PREVIEW
+// ===============================
+
 itemPhoto.addEventListener("change", function () {
 
     const file = itemPhoto.files[0];
 
-    if (file) {
-
-        const reader = new FileReader();
-
-        reader.onload = function (event) {
-
-            photoPreview.src = event.target.result;
-
-            photoPreview.style.display = "block";
-
-        };
-
-        reader.readAsDataURL(file);
+    if (!file) {
+        photoPreview.src = "";
+        photoPreview.style.display = "none";
+        return;
     }
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        photoPreview.src = event.target.result;
+        photoPreview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
 });
 
 
-// Compress Photo
+// ===============================
+// COMPRESS IMAGE
+// ===============================
+
 function compressImage(file) {
 
     return new Promise((resolve, reject) => {
@@ -59,8 +64,6 @@ function compressImage(file) {
                 let width = img.width;
                 let height = img.height;
 
-
-                // Resize image
                 if (width > height) {
 
                     if (width > maxWidth) {
@@ -76,107 +79,91 @@ function compressImage(file) {
                     }
                 }
 
-
                 canvas.width = width;
                 canvas.height = height;
 
-
                 const ctx = canvas.getContext("2d");
 
-                ctx.drawImage(
-                    img,
-                    0,
-                    0,
-                    width,
-                    height
-                );
+                ctx.drawImage(img, 0, 0, width, height);
 
-
-                // Convert to small JPEG
                 const compressedImage =
                     canvas.toDataURL("image/jpeg", 0.6);
 
-
                 resolve(compressedImage);
             };
-
 
             img.onerror = function () {
                 reject(new Error("Image load failed."));
             };
 
-
             img.src = event.target.result;
         };
-
 
         reader.onerror = function () {
             reject(new Error("File read failed."));
         };
 
-
         reader.readAsDataURL(file);
-
     });
 }
 
 
-// Submit Form
+// ===============================
+// SUBMIT LOST ITEM FORM
+// ===============================
+
 lostItemForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-
-    // Check login
     const user = auth.currentUser;
 
     if (!user) {
-
         alert("Please login first.");
-
         window.location.href = "login.html";
-
         return;
     }
 
+    // Get Person Name
+    const personName =
+        document.getElementById("personName").value.trim();
 
-    // Get values
+    // Get Item Name
     const itemName =
-        document.getElementById("itemName").value;
+        document.getElementById("itemName").value.trim();
 
+    // Get Category
     const category =
         document.getElementById("category").value;
 
+    // Get remaining details
     const location =
-        document.getElementById("location").value;
+        document.getElementById("location").value.trim();
 
     const dateLost =
         document.getElementById("dateLost").value;
 
     const description =
-        document.getElementById("description").value;
+        document.getElementById("description").value.trim();
 
     const contact =
-        document.getElementById("contact").value;
+        document.getElementById("contact").value.trim();
 
-
-    // Photo
     let photo = "";
 
     try {
 
+        // Compress selected photo
         if (itemPhoto.files[0]) {
-
-            photo = await compressImage(
-                itemPhoto.files[0]
-            );
+            photo = await compressImage(itemPhoto.files[0]);
         }
 
-
-        // Create item object
+        // Create report
         const lostItem = {
 
             userId: user.uid,
+
+            personName: personName,
 
             itemName: itemName,
 
@@ -193,39 +180,25 @@ lostItemForm.addEventListener("submit", async function (event) {
             photo: photo
         };
 
-
-        // Save to Firebase
+        // Save report to Firebase
         await addDoc(
             collection(db, "lostItems"),
             lostItem
         );
 
-
-        // Success notification
         alert("Lost item reported successfully!");
 
-
-        // Clear form
+        // Reset form
         lostItemForm.reset();
 
-
-        // Hide photo
+        // Hide photo preview
+        photoPreview.src = "";
         photoPreview.style.display = "none";
 
-        photoPreview.src = "";
+    } catch (error) {
 
+        console.error("Error adding lost item:", error);
+
+        alert("Error! Lost item save nahi hua. Please try again.");
     }
-
-    catch (error) {
-
-        console.error(
-            "Error adding lost item:",
-            error
-        );
-
-        alert(
-            "Error! Lost item save nahi hua."
-        );
-    }
-
 });

@@ -1,514 +1,209 @@
 import { db, auth } from "./firebase.js";
 
 import {
-    collection,
-    getDocs,
-    deleteDoc,
-    doc
+  collection,
+  getDocs,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 import {
-    onAuthStateChanged,
-    signOut
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
+const myReports = document.getElementById("myReports");
 
-// ===============================
-// REPORTS CONTAINER
-// ===============================
-
-const myReports =
-    document.getElementById("myReports");
-
-
-// ===============================
-// LOAD MY REPORTS
-// ===============================
-
+// Load reports belonging to the logged-in user
 async function loadMyReports(user) {
+  try {
+    myReports.innerHTML = "<p>Loading your reports...</p>";
 
-    try {
+    const lostSnapshot = await getDocs(collection(db, "lostItems"));
+    const foundSnapshot = await getDocs(collection(db, "foundItems"));
 
-        // Get Lost Items
-        const lostSnapshot =
-            await getDocs(
-                collection(db, "lostItems")
-            );
+    let reports = [];
 
+    // Lost reports
+    lostSnapshot.forEach(function (docSnap) {
+      const data = docSnap.data();
 
-        // Get Found Items
-        const foundSnapshot =
-            await getDocs(
-                collection(db, "foundItems")
-            );
-
-
-        let reports = [];
-
-
-        // ===============================
-        // LOST ITEMS
-        // ===============================
-
-        lostSnapshot.forEach(function (docSnap) {
-
-            const data = docSnap.data();
-
-            if (data.userId === user.uid) {
-
-                reports.push({
-
-                    id: docSnap.id,
-
-                    type: "Lost",
-
-                    itemName: data.itemName,
-
-                    category: data.category,
-
-                    location: data.location,
-
-                    date: data.dateLost,
-
-                    description: data.description,
-
-                    contact: data.contact,
-
-                    photo: data.photo
-
-                });
-
-            }
-
+      if (data.userId === user.uid) {
+        reports.push({
+          id: docSnap.id,
+          type: "Lost",
+          personName: data.personName || "",
+          itemName: data.itemName || "",
+          category: data.category || "",
+          location: data.location || "",
+          date: data.dateLost || "",
+          description: data.description || "",
+          contact: data.contact || "",
+          photo: data.photo || ""
         });
+      }
+    });
 
+    // Found reports
+    foundSnapshot.forEach(function (docSnap) {
+      const data = docSnap.data();
 
-        // ===============================
-        // FOUND ITEMS
-        // ===============================
-
-        foundSnapshot.forEach(function (docSnap) {
-
-            const data = docSnap.data();
-
-            if (data.userId === user.uid) {
-
-                reports.push({
-
-                    id: docSnap.id,
-
-                    type: "Found",
-
-                    itemName: data.itemName,
-
-                    category: data.category,
-
-                    location: data.location,
-
-                    date: data.dateFound,
-
-                    description: data.description,
-
-                    contact: data.contact,
-
-                    photo: data.photo
-
-                });
-
-            }
-
+      if (data.userId === user.uid) {
+        reports.push({
+          id: docSnap.id,
+          type: "Found",
+          personName: data.personName || "",
+          itemName: data.itemName || "",
+          category: data.category || "",
+          location: data.location || "",
+          date: data.dateFound || "",
+          description: data.description || "",
+          contact: data.contact || "",
+          photo: data.photo || ""
         });
-
-
-        // ===============================
-        // NO REPORTS
-        // ===============================
-
-        if (reports.length === 0) {
-
-            myReports.innerHTML = `
-                <h3>No Reports Found</h3>
-
-                <p>
-                    You have not reported any
-                    lost or found item yet.
-                </p>
-            `;
-
-            return;
-        }
-
-
-        // Clear old reports
-        myReports.innerHTML = "";
-
-
-        // ===============================
-        // DISPLAY REPORTS
-        // ===============================
-
-        reports.forEach(function (report) {
-
-            const reportBox =
-                document.createElement("div");
-
-
-            reportBox.className =
-                "item-card";
-
-
-            // ===============================
-            // PHOTO
-            // ===============================
-
-            let photoHTML = "";
-
-
-            if (
-                report.photo &&
-                report.photo.trim() !== ""
-            ) {
-
-                photoHTML = `
-                    <img
-                        src="${report.photo}"
-                        width="150"
-                        alt="Item Photo"
-                    >
-                    <br><br>
-                `;
-
-            }
-
-
-            // ===============================
-            // REPORT DETAILS
-            // ===============================
-
-            reportBox.innerHTML = `
-
-                <h3>
-                    ${report.type} Item
-                </h3>
-
-                ${photoHTML}
-
-                <p>
-                    <b>Item Name:</b>
-                    ${report.itemName || "Not available"}
-                </p>
-
-                <p>
-                    <b>Category:</b>
-                    ${report.category || "Not available"}
-                </p>
-
-                <p>
-                    <b>Location:</b>
-                    ${report.location || "Not available"}
-                </p>
-
-                <p>
-                    <b>Date:</b>
-                    ${report.date || "Not available"}
-                </p>
-
-                <p>
-                    <b>Description:</b>
-                    ${report.description || "Not available"}
-                </p>
-
-                <p>
-                    <b>Contact:</b>
-                    ${report.contact || "Not available"}
-                </p>
-
-                <br>
-
-                <button
-                    class="delete-report-btn"
-                    data-id="${report.id}"
-                    data-type="${report.type}"
-                >
-                    🗑️ Delete Report
-                </button>
-
-            `;
-
-
-            myReports.appendChild(reportBox);
-
-        });
-
-
-        // ===============================
-        // DELETE BUTTONS
-        // ===============================
-
-        const deleteButtons =
-            document.querySelectorAll(
-                ".delete-report-btn"
-            );
-
-
-        deleteButtons.forEach(function (button) {
-
-            button.addEventListener(
-                "click",
-                async function () {
-
-                    // Prevent double click
-                    if (button.disabled) {
-                        return;
-                    }
-
-
-                    const reportId =
-                        button.dataset.id;
-
-                    const reportType =
-                        button.dataset.type;
-
-
-                    // ===============================
-                    // CONFIRMATION
-                    // ===============================
-
-                    const confirmDelete =
-                        confirm(
-                            "Are you sure you want to delete this report?"
-                        );
-
-
-                    if (!confirmDelete) {
-                        return;
-                    }
-
-
-                    try {
-
-                        // Disable button
-                        button.disabled = true;
-
-                        button.innerText =
-                            "Deleting...";
-
-
-                        // ===============================
-                        // COLLECTION NAME
-                        // ===============================
-
-                        let collectionName;
-
-
-                        if (reportType === "Lost") {
-
-                            collectionName =
-                                "lostItems";
-
-                        } else if (reportType === "Found") {
-
-                            collectionName =
-                                "foundItems";
-
-                        } else {
-
-                            throw new Error(
-                                "Invalid report type."
-                            );
-
-                        }
-
-
-                        // ===============================
-                        // DELETE FROM FIRESTORE
-                        // ===============================
-
-                        const reportRef =
-                            doc(
-                                db,
-                                collectionName,
-                                reportId
-                            );
-
-
-                        await deleteDoc(reportRef);
-
-
-                        // ===============================
-                        // REMOVE CARD IMMEDIATELY
-                        // ===============================
-
-                        const reportCard =
-                            button.closest(".item-card");
-
-
-                        if (reportCard) {
-
-                            reportCard.remove();
-
-                        }
-
-
-                        // ===============================
-                        // SUCCESS MESSAGE
-                        // ===============================
-
-                        alert(
-                            `${reportType} report deleted successfully!`
-                        );
-
-
-                        // ===============================
-                        // CHECK IF NO REPORTS LEFT
-                        // ===============================
-
-                        if (
-                            myReports.children.length === 0
-                        ) {
-
-                            myReports.innerHTML = `
-
-                                <h3>No Reports Found</h3>
-
-                                <p>
-                                    You have not reported any
-                                    lost or found item yet.
-                                </p>
-
-                            `;
-
-                        }
-
-
-                    }
-
-                    catch (error) {
-
-                        console.error(
-                            "Delete error:",
-                            error
-                        );
-
-
-                        // Enable button again
-                        button.disabled = false;
-
-                        button.innerText =
-                            "🗑️ Delete Report";
-
-
-                        alert(
-                            "Report delete nahi ho paayi. Please try again."
-                        );
-
-                    }
-
-                }
-            );
-
-        });
-
+      }
+    });
+
+    // No reports found
+    if (reports.length === 0) {
+      myReports.innerHTML = `
+        <h3>No Reports Found</h3>
+        <p>You have not reported any lost or found item yet.</p>
+      `;
+      return;
     }
 
-    catch (error) {
+    myReports.innerHTML = "";
 
-        console.error(
-            "Error loading reports:",
-            error
+    // Display reports
+    reports.forEach(function (report) {
+      const reportBox = document.createElement("div");
+      reportBox.className = "item-card";
+
+      const photoHTML =
+        report.photo && report.photo.trim() !== ""
+          ? `<img src="${report.photo}" width="150" alt="Item Photo"><br><br>`
+          : "";
+
+      // Build the report card using textContent for user-entered text
+      const title = document.createElement("h3");
+      title.textContent = `${report.type} Item`;
+      reportBox.appendChild(title);
+
+      if (photoHTML) {
+        const photo = document.createElement("img");
+        photo.src = report.photo;
+        photo.width = 150;
+        photo.alt = "Item Photo";
+        reportBox.appendChild(photo);
+      }
+
+      const fields = [
+        ["Person Name", report.personName || "Not available"],
+        ["Item Name", report.itemName || "Not available"],
+        ["Category", report.category || "Not available"],
+        ["Location", report.location || "Not available"],
+        ["Date", report.date || "Not available"],
+        ["Description", report.description || "Not available"],
+        ["Contact", report.contact || "Not available"]
+      ];
+
+      fields.forEach(function ([label, value]) {
+        const paragraph = document.createElement("p");
+        const bold = document.createElement("b");
+
+        bold.textContent = label + ": ";
+        paragraph.appendChild(bold);
+        paragraph.appendChild(document.createTextNode(value));
+
+        reportBox.appendChild(paragraph);
+      });
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-report-btn";
+      deleteButton.textContent = "🗑️ Delete Report";
+      deleteButton.dataset.id = report.id;
+      deleteButton.dataset.type = report.type;
+
+      reportBox.appendChild(deleteButton);
+      myReports.appendChild(reportBox);
+    });
+
+    // Delete report
+    document.querySelectorAll(".delete-report-btn").forEach(function (button) {
+      button.addEventListener("click", async function () {
+        const reportId = button.dataset.id;
+        const reportType = button.dataset.type;
+
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this report?"
         );
 
+        if (!confirmDelete) return;
 
-        myReports.innerHTML = `
+        button.disabled = true;
+        button.textContent = "Deleting...";
 
-            <p>
-                Error loading your reports.
-            </p>
+        try {
+          const collectionName =
+            reportType === "Lost" ? "lostItems" : "foundItems";
 
-        `;
+          await deleteDoc(doc(db, collectionName, reportId));
 
-    }
+          const reportCard = button.closest(".item-card");
+          if (reportCard) {
+            reportCard.remove();
+          }
 
+          alert("Report deleted successfully!");
+
+          if (myReports.querySelectorAll(".item-card").length === 0) {
+            myReports.innerHTML = `
+              <h3>No Reports Found</h3>
+              <p>You have not reported any lost or found item yet.</p>
+            `;
+          }
+        } catch (error) {
+          console.error("Delete error:", error);
+          alert("Could not delete the report. Please try again.");
+
+          button.disabled = false;
+          button.textContent = "🗑️ Delete Report";
+        }
+      });
+    });
+
+  } catch (error) {
+    console.error("Error loading reports:", error);
+    myReports.innerHTML = `
+      <p>Error loading your reports. Please refresh the page and try again.</p>
+    `;
+  }
 }
 
+// Check login status
+onAuthStateChanged(auth, function (user) {
+  if (!user) {
+    alert("Please login first.");
+    window.location.href = "login.html";
+    return;
+  }
 
-// ===============================
-// CHECK LOGIN
-// ===============================
+  loadMyReports(user);
+});
 
-onAuthStateChanged(
-    auth,
-    function (user) {
-
-        if (!user) {
-
-            alert(
-                "Please login first."
-            );
-
-            window.location.href =
-                "login.html";
-
-            return;
-        }
-
-
-        console.log(
-            "Current user:",
-            user.email
-        );
-
-
-        loadMyReports(user);
-
-    }
-);
-
-
-// ===============================
-// LOGOUT
-// ===============================
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
+// Logout
+const logoutBtn = document.getElementById("logoutBtn");
 
 if (logoutBtn) {
-
-    logoutBtn.addEventListener(
-        "click",
-        async function () {
-
-            try {
-
-                await signOut(auth);
-
-
-                alert(
-                    "Logged out successfully!"
-                );
-
-
-                window.location.href =
-                    "login.html";
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
-
-                alert(
-                    "Logout failed!"
-                );
-
-            }
-
-        }
-    );
-
+  logoutBtn.addEventListener("click", async function () {
+    try {
+      await signOut(auth);
+      alert("Logged out successfully!");
+      window.location.href = "login.html";
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("Logout failed!");
+    }
+  });
 }
